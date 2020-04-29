@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,7 +46,6 @@ public class CompanyController {
     }
 
     @ApiOperation(value ="/Company", notes = "delete company API")
-//    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value ="/Company", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<Boolean> DeleteCompany(HttpServletRequest request, DeleteCompanyRequest deleteCompanyRequest) {
         return new ResponseEntity<>(companyService.deleteCompany(deleteCompanyRequest.getName(), deleteCompanyRequest.getToken()), HttpStatus.OK);

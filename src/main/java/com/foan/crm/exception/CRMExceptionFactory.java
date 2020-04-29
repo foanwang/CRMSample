@@ -1,8 +1,6 @@
-package com.foan.crm.handler;
+package com.foan.crm.exception;
 
-import com.foan.crm.exception.AbstractCustomException;
-import com.foan.crm.exception.CRMException;
-import com.foan.crm.exception.ServiceResponse;
+import com.foan.crm.entity.error.ServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

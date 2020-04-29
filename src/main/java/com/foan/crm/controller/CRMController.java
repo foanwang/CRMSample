@@ -31,14 +31,14 @@ public class CRMController {
     @ApiOperation(value ="/login", notes = "User login API")
     @RequestMapping(value ="/login", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<LoginResponse> Login(HttpServletRequest request, LoginRequest loginRequest) {
-        return new ResponseEntity<>(userService.UserLogin(loginRequest.getName(),loginRequest.getPassword()), HttpStatus.OK);
+        return new ResponseEntity<>(userService.userLogin(loginRequest.getName(),loginRequest.getPassword()), HttpStatus.OK);
     }
 
 
     @ApiOperation(value ="/User", notes = "create user")
     @RequestMapping(value ="/User", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<Boolean> CreateUser(HttpServletRequest request, CreateUserRequest createUserRequest) {
-        return new ResponseEntity<>(userService.CreateUser(createUserRequest.getName(), createUserRequest.getPassword(), createUserRequest.getRole(), createUserRequest.getCreatedby()   ), HttpStatus.OK);
+        return new ResponseEntity<>(userService.createUser(createUserRequest.getName(), createUserRequest.getPassword(), createUserRequest.getRole(), createUserRequest.getCreatedby()   ), HttpStatus.OK);
     }
 
 }

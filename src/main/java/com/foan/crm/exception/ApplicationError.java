@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ApplicationError {
+public class ApplicationError extends RuntimeException{
 
     private static final Gson gson = new GsonBuilder()
             .excludeFieldsWithoutExposeAnnotation()

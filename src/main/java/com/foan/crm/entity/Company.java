@@ -27,17 +27,17 @@ public class Company {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "created_by")
+    @Column(name = "created_by", nullable = false)
     private String created_by;
 
     @Column(name = "create_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdat;
 
-    @Column(name = "update_by", nullable = false)
+    @Column(name = "update_by")
     private String updateby;
 
-    @Column(name = "update_at", nullable = false)
+    @Column(name = "update_at")
     @UpdateTimestamp
     private Timestamp updatedat;
 }

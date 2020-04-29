@@ -1,5 +1,6 @@
 package com.foan.crm.exception;
 
+import com.foan.crm.entity.error.ServiceResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;

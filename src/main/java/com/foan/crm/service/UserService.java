@@ -5,9 +5,10 @@ import com.foan.crm.constants.RoleType;
 import com.foan.crm.entity.User;
 import com.foan.crm.entity.dto.response.LoginResponse;
 import com.foan.crm.exception.CRMException;
-import com.foan.crm.handler.CRMExceptionFactory;
+import com.foan.crm.exception.CRMExceptionFactory;
 import com.foan.crm.repository.RedisRepository;
 import com.foan.crm.repository.UserRepository;
+import com.foan.crm.util.DESUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,28 +26,33 @@ public class UserService {
     private RedisRepository redisRepository;
 
 
-    public LoginResponse UserLogin(String name, String password){
-
-        if(userRepository.findByName(name).isPresent()){
-           CRMExceptionFactory.create(CRMException.class, CRMServiceErrorCode.CAN_NOT_FINDCLINETDATA);
-       }
-       User loginuser = userRepository.findByName(name).get();
-       if (loginuser.getPassword()!=password){
-           CRMExceptionFactory.create(CRMException.class, CRMServiceErrorCode.CAN_NOT_FINDCLINETDATA);
-       }
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setName(name);
-        UUID token = UUID.randomUUID();
-        loginResponse.setToken(token.toString());
-        redisRepository.saveByKey(token.toString(), loginuser.getName(), 300);
-        return loginResponse;
+    public LoginResponse userLogin(String name, String password){
+        User loginuser =userRepository.findByName(name);
+        if (loginuser == null){
+            throw  CRMExceptionFactory.create(CRMException.class, CRMServiceErrorCode.CAN_NOT_FINDUSERDATA.getMessage(), CRMServiceErrorCode.CAN_NOT_FINDUSERDATA.getErrorCode());
+        }
+        if (!loginuser.getPassword().equals(password)){
+            throw  CRMExceptionFactory.create(CRMException.class, CRMServiceErrorCode.PASSWORD_IS_WRONG.getMessage(), CRMServiceErrorCode.PASSWORD_IS_WRONG.getErrorCode());
+        }
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.setName(name);
+            String token = null;
+            try {
+                token = DESUtil.encrypt(String.valueOf(loginuser.getRole()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            redisRepository.saveByKey(token, name, 180);
+            loginResponse.setToken(token);
+            return loginResponse;
     }
 
-    public Boolean CreateUser(String name, String password, RoleType role, String createdby){
-        if(userRepository.findByName(name).isPresent()){
-            CRMExceptionFactory.create(CRMException.class, CRMServiceErrorCode.CAN_NOT_FINDCLINETDATA);
+    public Boolean createUser(String name, String password, RoleType role, String createdby){
+        User createUser =userRepository.findByName(name);
+        if(createUser != null){
+            throw  CRMExceptionFactory.create(CRMException.class, CRMServiceErrorCode.USERDATA_IS_EXIST.getMessage(), CRMServiceErrorCode.USERDATA_IS_EXIST.getErrorCode());
         }
-        User createUser = new User();
+        createUser = new User();
         createUser.setName(name);
         createUser.setPassword(password);
         Date date = new Date();
