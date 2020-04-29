@@ -1,6 +1,5 @@
 package com.foan.crm.handler;
 
-import com.apple.eawt.Application;
 import com.foan.crm.exception.ApplicationException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

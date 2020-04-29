@@ -1,5 +1,6 @@
 package com.foan.crm.util;
 
+
 import org.apache.shiro.codec.Base64;
 
 import javax.crypto.Cipher;
