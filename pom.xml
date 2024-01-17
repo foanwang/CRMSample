@@ -23,7 +23,7 @@
         <swagger.version>2.9.2</swagger.version>
         <docker.image.prefix>891995617143.dkr.ecr.ap-northeast-1.amazonaws.com</docker.image.prefix>
         <org.mockito.version>2.21.0</org.mockito.version>
-        <mysql.version>5.1.47</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <maven-surefire-plugin.version>3.0.0-M1</maven-surefire-plugin.version>
         <querydsl.version>4.2.1</querydsl.version>
     </properties>
